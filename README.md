@@ -26,7 +26,7 @@ yarn lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Note
-Get your firebase config from Firebase Console : 
+Get your from Firebase Console then do these following steps: 
 1. Go to project settings 
 2. Click general and scroll down and select your Web app 
 3. Choose Config Radio button
