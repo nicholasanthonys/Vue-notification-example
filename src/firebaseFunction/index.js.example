@@ -41,7 +41,7 @@ export function getToken() {
   messaging
     .getToken({
       vapidKey:
-        "BOy7UJvIoV69v1fNkMwZlYfCpZDtnnnWsjsDP1IAo3FChgDNKr7xGoNWC2vRyoT3ctHnKFdeq6N8Vjv81BUJ5fM",
+        "your-public-key",
     })
     .then((currentToken) => {
       if (currentToken) {
