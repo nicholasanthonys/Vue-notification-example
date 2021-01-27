@@ -1,0 +1,76 @@
+
+// Unexpected token when using import/export
+// import firebase from 'firebase';
+// import "firebase/messaging";
+
+
+// See: https://github.com/microsoft/TypeScript/issues/14877
+/** @type {ServiceWorkerGlobalScope} */
+// let self;
+
+
+  // [START messaging_init_in_sw]
+  // Give the service worker access to Firebase Messaging.
+  // Note that you can only use Firebase Messaging here. Other Firebase libraries
+  // are not available in the service worker.
+  importScripts('https://www.gstatic.com/firebasejs/8.2.4/firebase-app.js');
+  
+  importScripts('https://www.gstatic.com/firebasejs/8.2.4/firebase-messaging.js');
+
+  // Initialize the Firebase app in the service worker by passing in
+  // your app's Firebase config object.
+  // https://firebase.google.com/docs/web/setup#config-object
+  firebase.initializeApp({
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: "",
+  });
+
+  // Retrieve an instance of Firebase Messaging so that it can handle background
+  // messages.
+
+  // [END messaging_init_in_sw]
+  const messaging = firebase.messaging();
+
+
+
+  // // [START messaging_on_background_message]
+  messaging.onBackgroundMessage((payload) => {
+    console.log('[firebase-messaging-sw.js] Received background message ', payload);
+
+    // Customize notification here. This will appear after your ORIGINAL TITLE AND MESSAGE
+
+    console.log("payload is");
+    console.log(payload);
+
+    // const {notification} = payload;
+    // const {body,title} = notification;
+    const notificationOptions = {
+      body : "Backgroudn content",
+      icon: '/firebase-logo.png',
+      actions: [{action: "open_url", title: "this is background title"}]
+    };
+  
+    self.registration.showNotification("You have 1 notification in background",
+      notificationOptions);
+  });
+
+  // Notification click event listener
+  self.addEventListener('notificationclick', function(event) {
+
+    switch(event.action){
+      case 'open_url':
+      clients.openWindow(event.notification.data.url); //which we got from above
+      break;
+      case 'any_other_action':
+      clients.openWindow("https://www.example.com");
+      break;
+    }
+  }
+  , false);
+  // [END messaging_on_background_message]

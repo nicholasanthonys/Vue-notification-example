@@ -1,0 +1,98 @@
+// Firebase App (the core Firebase SDK) is always required and
+// must be listed before other Firebase SDKs
+import firebase from "firebase/app";
+
+// Add the Firebase services that you want to use
+import "firebase/messaging";
+
+// TODO: Replace the following with your app's Firebase project configuration
+// For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
+var firebaseConfig = {
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: "",
+};
+
+export function getMessagingObject() {
+  // [START messaging_get_messaging_object]
+  return firebase.messaging();
+  // [END messaging_get_messaging_object]
+}
+
+export async function init() {
+  console.log("init tirggered");
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  await getToken();
+}
+
+export function getToken() {
+  console.log("get token triggered");
+  const messaging = firebase.messaging();
+  // [START messaging_get_token]
+  // Get registration token. Initially this makes a network call, once retrieved
+  // subsequent calls to getToken will return from cache.
+  messaging
+    .getToken({
+      vapidKey:
+        "BOy7UJvIoV69v1fNkMwZlYfCpZDtnnnWsjsDP1IAo3FChgDNKr7xGoNWC2vRyoT3ctHnKFdeq6N8Vjv81BUJ5fM",
+    })
+    .then((currentToken) => {
+      if (currentToken) {
+        console.log("current token is");
+        console.log(currentToken);
+        return currentToken;
+      } else {
+        // Show permission request UI
+        console.log(
+          "No registration token available. Request permission to generate one."
+        );
+        // ...
+      }
+    })
+    .catch((err) => {
+ 
+      console.log("An error occurred while retrieving token. ", err);
+      // ...
+    });
+  // [END messaging_get_token]
+}
+
+export function requestPermission() {
+  console.log("request permission triggered");
+  // [START messaging_request_permission]
+  Notification.requestPermission().then((permission) => {
+    if (permission === "granted") {
+      console.log("Notification permission granted.");
+      // TODO(developer): Retrieve a registration token for use with FCM.
+      // ...
+    } else {
+      console.log("Unable to get permission to notify.");
+    }
+  });
+  // [END messaging_request_permission]
+}
+
+export function deleteToken() {
+  const messaging = firebase.messaging();
+
+  // [START messaging_delete_token]
+  messaging
+    .deleteToken()
+    .then(() => {
+      console.log("Token deleted.");
+      // ...
+    })
+    .catch((err) => {
+      console.log("Unable to delete token. ", err);
+    });
+  // [END messaging_delete_token]
+}
+
+
