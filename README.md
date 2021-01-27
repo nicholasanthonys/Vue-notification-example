@@ -33,6 +33,7 @@ Get your from Firebase Console then do these following steps:
 4. Copy firebase config
 5. Create index.js in firebaseFunction directory and Paste firebase config
 6.  create firebase-messaging-sw.js in public directory and  paste firebase config
+7. Send message from your firebase console and receive the message in vuejs
 
 
 
