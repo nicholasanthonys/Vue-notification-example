@@ -31,9 +31,8 @@ Get your from Firebase Console then do these following steps:
 2. Click general and scroll down and select your Web app 
 3. Choose Config Radio button
 4. Copy firebase config
-5. Create index.js in firebaseFunction directory
-6. Paste firebase config there
-7. create firebase-messaging-sw.js in public directory
-8. paste firebase config there
+5. Create index.js in firebaseFunction directory and Paste firebase config
+6.  create firebase-messaging-sw.js in public directory paste firebase config
+
 
 
